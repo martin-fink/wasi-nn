@@ -462,10 +462,11 @@ impl InterfaceFunc {
                 | Type::Builtin(BuiltinType::S32)
                 | Type::Builtin(BuiltinType::U32 { .. })
                 | Type::Builtin(BuiltinType::Char)
-                | Type::Pointer(_)
-                | Type::ConstPointer(_)
                 | Type::Handle(_)
                 | Type::Variant(_) => params.push(WasmType::I32),
+
+                Type::Pointer(_)
+                | Type::ConstPointer(_) => params.push(WasmType::I64),
 
                 Type::Record(r) => match r.bitflags_repr() {
                     Some(repr) => params.push(WasmType::from(repr)),
@@ -525,10 +526,10 @@ impl InterfaceFunc {
                         match &**ty.type_() {
                             Type::Record(r) if r.is_tuple() => {
                                 for _ in 0..r.members.len() {
-                                    params.push(WasmType::I32);
+                                    params.push(WasmType::I64);
                                 }
                             }
-                            _ => params.push(WasmType::I32),
+                            _ => params.push(WasmType::I64),
                         }
                     }
                 }
