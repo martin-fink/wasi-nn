@@ -10,7 +10,7 @@
 
 ;;; The size of a graph buffer. This is equivalent to `$size` in `typenames.witx` but renamed since `typenames.witx` is
 ;;; not included here but is included in the overall ephemeral phase.
-(typename $buffer_size u32)
+(typename $buffer_size u64)
 
 ;;; Error codes returned by functions in this API. This is prefixed to avoid conflicts with the `$errno` in
 ;;; `typenames.witx`.
@@ -132,7 +132,7 @@
   (@interface func (export "set_input")
     (param $context $graph_execution_context)
     ;;; The index of the input to change.
-    (param $index u32)
+    (param $index u64)
     ;;; The tensor to set as the input.
     (param $tensor $tensor)
 
@@ -145,7 +145,7 @@
   (@interface func (export "get_output")
     (param $context $graph_execution_context)
     ;;; The index of the output to retrieve.
-    (param $index u32)
+    (param $index u64)
     ;;; An out parameter to which to copy the tensor data. The caller is responsible for allocating enough memory for
     ;;; the tensor data or an error will be returned. Currently there is no dynamic way to extract the additional
     ;;; tensor metadata (i.e. dimension, element type) but this should be added at some point.
